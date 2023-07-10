@@ -5,11 +5,7 @@ const cors = require("cors");
 const app = express();
 
 var corsOptions = {
-  origin: [
-    "http://localhost:3000",
-    // "https://injecao-sql.vercel.app",
-    // "https://injecao-sql-git-master-helenapilon.vercel.app",
-  ],
+  origin: ["http://localhost:3000", "https://avaliacao-seguranca.vercel.app/"],
 };
 
 const db = require("./queries");

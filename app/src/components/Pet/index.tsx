@@ -183,7 +183,7 @@ export default function PetRegister() {
             {!!types &&
               types.length > 0 &&
               types.map((type) => (
-                <Col md={4} className="types">
+                <Col md={4} className="types" key={`${type.id}`}>
                   <label htmlFor={type.id.toString()}>{type.name}</label>
                   <input
                     type="radio"

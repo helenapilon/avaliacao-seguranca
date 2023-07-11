@@ -16,6 +16,7 @@ interface petsProps {
   gender: string;
   color: string;
   breed: string;
+  type_id: number;
 }
 
 export default function PetsList() {
@@ -83,6 +84,7 @@ export default function PetsList() {
             <tr>
               <th>Dono</th>
               <th>Tipo</th>
+              <th>Id do Tipo</th>
               <th>Nome</th>
               <th>Raça</th>
               <th>Cor</th>
@@ -96,6 +98,7 @@ export default function PetsList() {
                 <tr key={pet.id}>
                   <td>{pet.owner}</td>
                   <td>{pet.type}</td>
+                  <td>{pet.type_id}</td>
                   <td>{pet.name}</td>
                   <td>{pet.breed}</td>
                   <td>{pet.color}</td>

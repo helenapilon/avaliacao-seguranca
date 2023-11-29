@@ -17,7 +17,7 @@ const getUsers = async (request, response) => {
     (error, results) => {
       if (error) {
         console.log(error);
-        return response.status(500).send(error);
+        return response.status(500).send({ message: error.message });
       }
 
       return response.status(200).json(results.rows);
@@ -34,7 +34,7 @@ const getUserById = (request, response) => {
     (error, results) => {
       if (error) {
         console.log(error);
-        return response.status(500).send(error);
+        return response.status(500).send({ message: error.message });
       }
       return response.status(200).json(results.rows[0]);
     }
@@ -50,7 +50,7 @@ const login = (request, response) => {
     (error, result) => {
       if (error) {
         console.log(error);
-        response.status(500).send(error);
+        response.status(500).send({ message: error.message });
       }
       if (result?.rows?.length == 0) {
         return response.status(500).send({ message: "Usuário não encontrado" });
@@ -69,7 +69,7 @@ const createUser = (request, response) => {
     [name, email, password, role],
     (error, results) => {
       if (error) {
-        return response.status(500).send(error);
+        return response.status(500).send({ message: error.message });
       }
       return response.status(201).send(results.rows[0]);
     }
@@ -85,7 +85,7 @@ const updateUser = (request, response) => {
     [name, email, role, id],
     (error, results) => {
       if (error) {
-        return response.status(500).send(error);
+        return response.status(500).send({ message: error.message });
       }
       return response.status(200).send(results.rows[0]);
     }
@@ -96,7 +96,7 @@ const deleteUser = (request, response) => {
 
   pool.query("DELETE FROM users WHERE id = $1", [id], (error, results) => {
     if (error) {
-      return response.status(500).send(error);
+      return response.status(500).send({ message: error.message });
     }
     return response.status(200).send(results.rows[0]);
   });
@@ -111,7 +111,7 @@ const getLogs = (request, response) => {
     } ORDER BY id ASC`,
     (error, results) => {
       if (error) {
-        return response.status(500).send(error);
+        return response.status(500).send({ message: error.message });
       }
       return response.status(200).json(results.rows);
     }
@@ -123,7 +123,7 @@ const getLogById = (request, response) => {
 
   pool.query("SELECT * FROM log WHERE id = $1", [id], (error, results) => {
     if (error) {
-      return response.status(500).send(error);
+      return response.status(500).send({ message: error.message });
     }
     return response.status(200).json(results.rows[0]);
   });
@@ -134,7 +134,7 @@ const getLogByUserId = (request, response) => {
 
   pool.query("SELECT * FROM log WHERE user_id = $1", [id], (error, results) => {
     if (error) {
-      return response.status(500).send(error);
+      return response.status(500).send({ message: error.message });
     }
     return response.status(200).json(results.rows);
   });
@@ -148,7 +148,7 @@ const createLog = (request, response) => {
     [action, description, user_id],
     (error, results) => {
       if (error) {
-        return response.status(500).send(error);
+        return response.status(500).send({ message: error.message });
       }
       return response.status(201).send(results.rows[0]);
     }
@@ -160,7 +160,7 @@ const deleteLog = (request, response) => {
 
   pool.query("DELETE FROM log WHERE id = $1", [id], (error, results) => {
     if (error) {
-      return response.status(500).send(error);
+      return response.status(500).send({ message: error.message });
     }
     return response.status(200).send(results.rows[0]);
   });
@@ -173,7 +173,7 @@ const getRoles = (request, response) => {
     `SELECT * FROM role ${"WHERE name ilike '%" + name + "%'"} ORDER BY id ASC`,
     (error, results) => {
       if (error) {
-        return response.status(500).send(error);
+        return response.status(500).send({ message: error.message });
       }
       return response.status(200).json(results.rows);
     }
@@ -185,7 +185,7 @@ const getRoleById = (request, response) => {
 
   pool.query("SELECT * FROM role WHERE id = $1", [id], (error, results) => {
     if (error) {
-      return response.status(500).send(error);
+      return response.status(500).send({ message: error.message });
     }
     return response.status(200).json(results.rows[0]);
   });
@@ -199,7 +199,7 @@ const createRole = (request, response) => {
     [name],
     (error, results) => {
       if (error) {
-        return response.status(500).send(error);
+        return response.status(500).send({ message: error.message });
       }
       if (results.rows.length > 0) {
         return response.status(201).send(results.rows[0]);
@@ -218,7 +218,7 @@ const updateRole = (request, response) => {
     [name, id],
     (error, results) => {
       if (error) {
-        return response.status(500).send(error);
+        return response.status(500).send({ message: error.message });
       }
       return response.status(200).send(results.rows[0]);
     }
@@ -229,7 +229,7 @@ const deleteRole = (request, response) => {
 
   pool.query("DELETE FROM role WHERE id = $1", [id], (error, results) => {
     if (error) {
-      return response.status(500).send(error);
+      return response.status(500).send({ message: error.message });
     }
     return response.status(200).send(results.rows[0]);
   });
@@ -244,7 +244,7 @@ const getTypes = (request, response) => {
     } ORDER BY id ASC`,
     (error, results) => {
       if (error) {
-        return response.status(500).send(error);
+        return response.status(500).send({ message: error.message });
       }
       return response.status(200).json(results.rows);
     }
@@ -256,7 +256,7 @@ const getTypeById = (request, response) => {
 
   pool.query("SELECT * FROM pet_type WHERE id = $1", [id], (error, results) => {
     if (error) {
-      return response.status(500).send(error);
+      return response.status(500).send({ message: error.message });
     }
     return response.status(200).json(results.rows[0]);
   });
@@ -270,7 +270,7 @@ const createType = (request, response) => {
     [name],
     (error, results) => {
       if (error) {
-        return response.status(500).send(error);
+        return response.status(500).send({ message: error.message });
       }
       if (results.rows.length > 0) {
         return response.status(201).send(results.rows[0]);
@@ -289,7 +289,7 @@ const updateType = (request, response) => {
     [name, id],
     (error, results) => {
       if (error) {
-        return response.status(500).send(error);
+        return response.status(500).send({ message: error.message });
       }
       return response.status(200).send(results.rows[0]);
     }
@@ -300,7 +300,7 @@ const deleteType = (request, response) => {
 
   pool.query("DELETE FROM pet_type WHERE id = $1", [id], (error, results) => {
     if (error) {
-      return response.status(500).send(error);
+      return response.status(500).send({ message: error.message });
     }
     return response.status(200).send(results.rows[0]);
   });
@@ -319,7 +319,7 @@ const getPets = (request, response) => {
     (error, results) => {
       if (error) {
         console.log(error);
-        return response.status(500).send(error);
+        return response.status(500).send({ message: error.message });
       }
       return response.status(200).json(results.rows);
     }
@@ -331,7 +331,7 @@ const getPetById = (request, response) => {
 
   pool.query("SELECT * FROM pet WHERE id = $1", [id], (error, results) => {
     if (error) {
-      return response.status(500).send(error);
+      return response.status(500).send({ message: error.message });
     }
     return response.status(200).json(results.rows[0]);
   });
@@ -345,7 +345,7 @@ const createPet = (request, response) => {
     [name, gender, breed, color, pet_type, user_id],
     (error, results) => {
       if (error) {
-        return response.status(500).send(error);
+        return response.status(500).send({ message: error.message });
       }
       if (results.rows.length > 0) {
         return response.status(201).send(results.rows[0]);
@@ -362,7 +362,7 @@ const updatePet = (request, response) => {
     [name, gender, breed, color, pet_type, id],
     (error, results) => {
       if (error) {
-        return response.status(500).send(error);
+        return response.status(500).send({ message: error.message });
       }
       return response.status(200).send(results.rows[0]);
     }
@@ -373,7 +373,7 @@ const deletePet = (request, response) => {
 
   pool.query("DELETE FROM pet WHERE id = $1", [id], (error, results) => {
     if (error) {
-      return response.status(500).send(error);
+      return response.status(500).send({ message: error.message });
     }
     return response.status(200).send(results.rows[0]);
   });
